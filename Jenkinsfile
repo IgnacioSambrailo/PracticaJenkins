@@ -1,20 +1,54 @@
+
+// Debería venir de un groovy que haga la verififación...
+CODE_CHANGES = true
+
+def gv
+
 pipeline {
     agent any
 
     stages {
+        // Adicionalmente a las var de env de Jenkins podemos setear nuestras propias vars.
+        environment {
+            TEST_VARIABLE = "Hello Jenkins"
+        }
+
+        stage('init') {
+            steps {
+                script {
+                    gv = load "groovy_test.groovy"        
+                }
+            }
+        }
 
         stage('build') {
+            // Los steps solo se ejecutarán si esta expresión es verdadera
+            when {
+                expression {
+                    BRANCH_NAME == 'dev' && CODE_CHANGES == true
+                }
+            }
 
             steps {
-                echo 'building the application...'
+                script {
+                    gv.buildApp()
+                }
             }
 
         }
 
         stage('test') {
+            // Los steps solo se ejecutarán si esta expresión es verdadera
+            when {
+                expression {
+                    BRANCH_NAME == 'dev' || BRANCH_NAME == 'main'
+                }
+            }
 
             steps {
-                echo 'testing the application...'
+                script {
+                    gv.testApp()
+                }
             }
 
         }
@@ -22,7 +56,9 @@ pipeline {
         stage('deploy') {
 
             steps {
-                echo 'deploying the application'
+                script {
+                    gv.deployApp()
+                }
             }
 
         }
