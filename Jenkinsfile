@@ -6,13 +6,13 @@ def gv
 
 pipeline {
     agent any
-
-    stages {
-        // Adicionalmente a las var de env de Jenkins podemos setear nuestras propias vars.
-        environment {
+    
+    environment {
             TEST_VARIABLE = "Hello Jenkins"
         }
 
+    stages {
+        // Adicionalmente a las var de env de Jenkins podemos setear nuestras propias vars.
         stage('init') {
             steps {
                 script {
