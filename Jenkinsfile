@@ -6,7 +6,7 @@ def gv
 
 pipeline {
     agent any
-    
+
     environment {
             TEST_VARIABLE = "Hello Jenkins"
         }
@@ -25,7 +25,7 @@ pipeline {
             // Los steps solo se ejecutarán si esta expresión es verdadera
             when {
                 expression {
-                    BRANCH_NAME == 'dev' && CODE_CHANGES == true
+                    BRANCH_NAME == 'main' && CODE_CHANGES == true
                 }
             }
 
