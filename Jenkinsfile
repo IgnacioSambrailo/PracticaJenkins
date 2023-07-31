@@ -51,6 +51,7 @@ pipeline {
             steps {
                 script {
                     echo "test..."
+                    sh "pytest test.py"
                     //gv.testApp()
                 }
             }
