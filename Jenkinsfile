@@ -48,14 +48,13 @@ pipeline {
                 }
             }
 
-            withPythonEnv('python3') {
-                sh 'pip install pytest'
-                sh 'pytest mytest.py'
-            }
-
             steps {
                 script {
                     echo "testing..."
+                    withPythonEnv('python3') {
+                        sh 'pip install pytest'
+                        sh 'pytest mytest.py'
+                    }
                     //gv.testApp()
                 }
             }
