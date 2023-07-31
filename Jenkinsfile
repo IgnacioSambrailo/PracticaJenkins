@@ -17,6 +17,7 @@ pipeline {
         stage('init') {
             steps {
                 script {
+                    echo "test..."
                     //gv = load "groovy_test.groovy"        
                 }
             }
@@ -32,6 +33,7 @@ pipeline {
 
             steps {
                 script {
+                    echo "test..."
                     //gv.buildApp()
                 }
             }
@@ -48,6 +50,7 @@ pipeline {
 
             steps {
                 script {
+                    echo "test..."
                     //gv.testApp()
                 }
             }
@@ -58,6 +61,7 @@ pipeline {
 
             steps {
                 script {
+                    echo "test..."
                     //gv.deployApp()
                 }
             }
