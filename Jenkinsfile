@@ -17,7 +17,7 @@ pipeline {
         stage('init') {
             steps {
                 script {
-                    echo "test..."
+                    echo "initializing..."
                     //gv = load "groovy_test.groovy"        
                 }
             }
@@ -33,7 +33,7 @@ pipeline {
 
             steps {
                 script {
-                    echo "test..."
+                    echo "building..."
                     //gv.buildApp()
                 }
             }
@@ -48,10 +48,14 @@ pipeline {
                 }
             }
 
+            withPythonEnv('python3') {
+                sh 'pip install pytest'
+                sh 'pytest mytest.py'
+            }
+
             steps {
                 script {
-                    echo "test..."
-                    sh "pytest test.py"
+                    echo "testing..."
                     //gv.testApp()
                 }
             }
@@ -62,7 +66,7 @@ pipeline {
 
             steps {
                 script {
-                    echo "test..."
+                    echo "deploying..."
                     //gv.deployApp()
                 }
             }
