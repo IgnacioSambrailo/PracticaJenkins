@@ -12,6 +12,13 @@ pipeline {
         }
 
     stages {
+        stage('checkout') {
+            steps {
+                echo 'checking out...'
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '0b03a4fb-1d50-4b25-ac42-b468c473acba', url: 'https://github.com/IgnacioSambrailo/EjemploPythonJenkins.git']])
+            }
+        }
+
         // Adicionalmente a las var de env de Jenkins podemos setear nuestras propias vars.
         stage('init') {
             steps {
