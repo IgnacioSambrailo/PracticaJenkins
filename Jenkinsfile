@@ -21,7 +21,6 @@ pipeline {
         stage('Test') {
             steps {
                 echo "testing..."
-                bat 'pip install pytest'
                 bat 'python -m pytest test.py'
             }
         }
