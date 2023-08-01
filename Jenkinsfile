@@ -19,9 +19,6 @@ pipeline {
         
 
         stage('Test') {
-            environment {
-                PATH = "C:\\Users\\ignacio.sambrailo\\AppData\\Local\\Programs\\Python\\Python311;$PATH"
-            }
             steps {
                 echo "testing..."
                 bat 'pip install pytest'
