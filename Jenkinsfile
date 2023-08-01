@@ -1,77 +1,33 @@
-
-// Debería venir de un groovy que haga la verififación...
-CODE_CHANGES = true
-
-def gv
-
 pipeline {
     agent any
 
-    environment {
-            TEST_VARIABLE = "Hello Jenkins"
-        }
-
     stages {
 
-        // Adicionalmente a las var de env de Jenkins podemos setear nuestras propias vars.
-        stage('init') {
+        stage('Checkout') {
             steps {
-                script {
-                    echo "initializing..."
-                    //gv = load "groovy_test.groovy"        
-                }
+                echo "checking out..."
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/IgnacioSambrailo/EjemploPythonJenkins.git']])
             }
         }
 
-        stage('build') {
-            // Los steps solo se ejecutarán si esta expresión es verdadera
-            when {
-                expression {
-                    BRANCH_NAME == 'main' && CODE_CHANGES == true
-                }
-            }
-
+        stage('Build') {
             steps {
-                script {
-                    echo "building..."
-                    //gv.buildApp()
-                }
+                echo "building..."
+                git branch: 'main', url: 'https://github.com/IgnacioSambrailo/EjemploPythonJenkins.git'
             }
-
         }
+        
 
-        stage('test') {
-            // Los steps solo se ejecutarán si esta expresión es verdadera
-            when {
-                expression {
-                    BRANCH_NAME == 'dev' || BRANCH_NAME == 'main'
-                }
+        stage('Test') {
+            environment {
+                PATH = "C:\\Users\\ignacio.sambrailo\\AppData\\Local\\Programs\\Python\\Python311;$PATH"
             }
-
             steps {
-                script {
-                    echo "testing..."
-                    withPythonEnv('python3') {
-                        sh 'pip install pytest'
-                        sh 'pytest mytest.py'
-                    }
-                    //gv.testApp()
-                }
+                echo "testing..."
+                bat 'pip install pytest'
+                bat 'python -m pytest test.py'
             }
-
-        }
-
-        stage('deploy') {
-
-            steps {
-                script {
-                    echo "deploying..."
-                    //gv.deployApp()
-                }
-            }
-
         }
 
     }
-
 }
